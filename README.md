@@ -21,16 +21,24 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <h2> High-Level Deployment and Configuration Steps</h2>  
 
 <p> 
+  
+**PHASE 1**
 
   - Install Active Directory & Promote DC-1 to Domain Controller
   - Create Domain Admin User & Normal User Accounts
+  - Join Client-1 to the Domain Controller
+
+**PHASE 2**
+  - Setup RDP & User Accounts via PowerShell
   - 
   
 
 
 </p>
 
- <h2>  Step 1: Install Active Directory </h2> 
+<h1> PHASE 1</h1>
+
+ <h2> Install Active Directory </h2> 
 
 <p> 
   
@@ -84,10 +92,13 @@ In the Event you need to restore AD, Ensure you create a password for such a tim
 
 
 </p>
+
 <p> 
 <img width="400" height="246" alt="image" src="https://github.com/user-attachments/assets/c4e2ed53-a21c-4c82-9720-6237154821fb" />
 
 </p>
+
+<h2></h2>
 
 <H2> Create Domain Admin User & Normal User Accounts </H2>
 
@@ -137,6 +148,7 @@ In the Event you need to restore AD, Ensure you create a password for such a tim
 <p>
   
    - Turn Jane Doe into an admin by right clicking her name > properties > Member Of > Add > type Domain Admins > Check Name > OK
+   - Restart VM
    
 </p>
   
@@ -150,78 +162,75 @@ In the Event you need to restore AD, Ensure you create a password for such a tim
 
 <P> 
   
-  - Now Jane Doe is a Domain Admin that can create users, manage/ create Group Policies etc
-  - We will user Jane Doe Admin account going forward.
+  - Now Jane Doe is a Domain Admin that can create users, manage/ create Group Policies etc.
+  - We will user Jane Doe Admin account "mydomain.com\jane_admin" going forward.
   
 </P>
 
-<p>
+<h2></h2>
 
-
-## Step 6: Log out of DC-1 to log back in as Jane Doe
-
-
-   - Log back in as "mydomain.com\jane_admin"
-   - Use jane_admin as your admin account from now on
-
-<img width="453" height="557" alt="Screenshot 2025-09-06 104858" src="https://github.com/user-attachments/assets/a2406d9b-e020-47ef-8727-cc6a44ddbd49" />
-
+<h2> Join Client-1 to the Domain Controller </h2>
 
 <p>
+From the Prerequisite Installation guide (https://github.com/Cyber-Haze/Azure-AD-DC-and-Client-VM-s-Configuration) We had Linked DC-1 Static IP to Client-1 DNS
+
+  - Log into Client-1 as "labuser".
+  - Right click "Start Menu" > System > Rename this PC (Advanced) > Computer Name > Change.
+  - Select "Member Of" and Enter the Domain name > authorize the change with Jane_admin previlages.
+  - Save and Restart.
+  
+    
+
+</P>
+
+<p>
+<img width="1231" height="1033" alt="image" src="https://github.com/user-attachments/assets/3fb1ffde-839d-4a1e-8d87-543e8aaf0fce" />
+<img width="313" height="376" alt="image" src="https://github.com/user-attachments/assets/2acd7152-ab9e-4a99-9ecf-b1951ba354ca" />
+<img width="452" height="292" alt="image" src="https://github.com/user-attachments/assets/026beae9-0621-435e-9b5e-26507665c767" />
+
+</P>
+
+<h2></h2>
+
+<P> 
+  
+- Log into DC-1 with Jane_admin and open AD Users and Computers
+- You can verify that client-1 was added by checking DC-1 AD computers.
+- Move Client-1 to the OU _CLIENTS (Drag N Drop)
+
+</P>
+<p> 
+  
+<img width="502" height="324" alt="image" src="https://github.com/user-attachments/assets/74e9f1a2-4a84-4dc6-999a-9c9ad04d448c" />
+<img width="628" height="225" alt="image" src="https://github.com/user-attachments/assets/a02e5f74-bee1-4ebc-ba62-b2177f89bb1d" />
+
+</p>
+
+<p>
+
+<h2></h2>
+
+<h1> PHASE 2</h1>
 
 
+<h2> Setup RDP & User Accounts via PowerShell </h2>
 
-## Step 7: Login to Client-1 as the original local admin and join it to the domain  (Computer will restart)
+   <p> 
+     
+   - Login to Client-1 as an admin (mydomain.com\jane_admin)
+   - right click the start menu > open system > Click on "Remote Desktop" on User Accounts > click "Select users that can remotely access this PC"
+   - Add "Domain Users" access to remote desktop.
+   - After completing those steps you should be able to log into Client-1 as any domain user. (typically used for employee access)
 
-   - Right click the start menu > click system > click rename this pc advanced
-   - Under the computer name tab, click on "Change"
-   - Join it to the domain "mydomain.com"
+   </p>
    
+</br> 
 
-<img width="825" height="552" alt="Screenshot 2025-09-06 105051" src="https://github.com/user-attachments/assets/6bcc6533-ec89-4d80-b10c-b2568baeb5d4" />
+<p> 
+  
+<img width="911" height="703" alt="image" src="https://github.com/user-attachments/assets/3c67b64e-f38d-44b1-829e-edc8f62d998e" />
 
- - Enter the name and password of an account with permission to join the domain.
- - Use the account: mydomain.com\jane_admin
- - Once Client-1 has been added, the VM will restart.
-
-<img width="462" height="304" alt="Screenshot 2025-09-06 105113" src="https://github.com/user-attachments/assets/89e75f2c-7389-4d7e-ac81-93658bbd7a1f" />
-
-
-
-<p>
-
-## Step 8: Login to the Domain Controller and verify Client-1 shows up in ADUC
-
-   - Expand mydomain.com then go to "computers" to verify
-
-<img width="756" height="533" alt="Screenshot 2025-09-06 105129" src="https://github.com/user-attachments/assets/77b4a2eb-5c15-4ac3-877b-26ffce42a2a7" />
-
-
-
-<p>
-
-## Step 9: Create a new OU named "_CLIENTS" and drag Client-1 into there
-
-
-<img width="759" height="531" alt="Screenshot 2025-09-06 105212" src="https://github.com/user-attachments/assets/cf818cfe-f34d-4453-a195-b95328514884" />
-
-
-
-
-<p>
-
-
-## Step 10: Setting up RDP & User Accounts via PowerShell
-
-   - Setup RDP for non-administrative users on Client-1
-   - We have to login to Client-1 as an admin (using mydomain.com\jane_admin) right click the start menu and open system.
-   - Click on "Remote Desktop" on User Accounts and click "Select users that can remotely access this PC"
-   - Allow "Domain Users" access to remote desktop.
-   - After completing those steps you should be able to log into Client-1 as normal user (any user).
-
-<img width="460" height="256" alt="Screenshot 2025-09-06 105242" src="https://github.com/user-attachments/assets/f443d0c3-1ad2-4d18-b2fe-8a48a3ea949d" />
-
-
+</p>
 
 
 
