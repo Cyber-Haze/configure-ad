@@ -29,8 +29,9 @@ This tutorial outlines the implementation of on-premises Active Directory within
   - Join Client-1 to the Domain Controller
 
 **PHASE 2**
-  - Setup RDP & User Accounts via PowerShell
-  - 
+  - Setup RDP
+  - Create User Accounts via PowerShell
+    
   
 
 
@@ -172,7 +173,7 @@ In the Event you need to restore AD, Ensure you create a password for such a tim
 <h2> Join Client-1 to the Domain Controller </h2>
 
 <p>
-From the Prerequisite Installation guide (https://github.com/Cyber-Haze/Azure-AD-DC-and-Client-VM-s-Configuration) We had Linked DC-1 Static IP to Client-1 DNS
+From the Prerequisite Installation guide [ (https://github.com/Cyber-Haze/Azure-AD-DC-and-Client-VM-s-Configuration) ] We had Linked DC-1 Static IP to Client-1 DNS
 
   - Log into Client-1 as "labuser".
   - Right click "Start Menu" > System > Rename this PC (Advanced) > Computer Name > Change.
@@ -213,14 +214,15 @@ From the Prerequisite Installation guide (https://github.com/Cyber-Haze/Azure-AD
 <h1> PHASE 2</h1>
 
 
-<h2> Setup RDP & User Accounts via PowerShell </h2>
+<h2> Setup RDP (Remote Desktop Protocol) </h2>
 
    <p> 
      
    - Login to Client-1 as an admin (mydomain.com\jane_admin)
-   - right click the start menu > open system > Click on "Remote Desktop" on User Accounts > click "Select users that can remotely access this PC"
+   - right click the start menu > open System Properties > Click on "Remote Desktop" on User Accounts > click "Select users that can remotely access this PC"
    - Add "Domain Users" access to remote desktop.
-   - After completing those steps you should be able to log into Client-1 as any domain user. (typically used for employee access)
+   - You can now log into Client-1 as a normal, non-administrative user now. Normally you’d want to do this with Group Policy that allows you to change MANY systems at once
+
 
    </p>
    
@@ -232,58 +234,82 @@ From the Prerequisite Installation guide (https://github.com/Cyber-Haze/Azure-AD
 
 </p>
 
+<h2></h2>
 
+<h2>  Create User Accounts via PowerShell </h2>
 
-<p>
-
-
-## Step 11: Run Powershell script
-
-   - Use a Powershell script to generate a number of users for our Active Directory Domain.
-   - Login to DC-1 as mydomain.com\jane_admin
-   - Open Powershell_ISE as an administrator and create a new file then save
-   - [(https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)]
-   - Paste the script to generate thousands of users into the domain.
-   - Run Script
-
-<img width="827" height="495" alt="Screenshot 2025-09-06 105259" src="https://github.com/user-attachments/assets/0aae0939-8ea6-4bd3-b001-537a460a9a14" />
-
-- When finished, open ADUC and observe the accounts in the appropriate OU  "_EMPLOYEES"
-
-<img width="828" height="495" alt="Screenshot 2025-09-06 105319" src="https://github.com/user-attachments/assets/31ee762b-8696-4dbd-85d9-873952f806b1" />
-
-
-
-
-
-
-<p>
-
-
-## Step 12: Login as any user
+<p> 
   
-  - Now you can login as any of the users that was created by the script to further verify that the script has worked.
-  - Take note of the default password in the script (Password1) for all users.
+ Use a Powershell script to generate a number of users for our Active Directory Domain.
+ This method is used to bulk create users that can later be edited to match each employee. They can be moved to other OU's as needed and privilages changed via Group Policies.
 
-<img width="450" height="557" alt="Screenshot 2025-09-06 105619" src="https://github.com/user-attachments/assets/b5f52c67-bba4-4505-b9cc-848b73d31ff9" />
+ 
+   - Login to DC-1 as mydomain.com\jane_admin
+   - Open Powershell_ISE as an administrator and create a new file then copy raw file from [ (https://github.com/Cyber-Haze/Generate_Names_Create_Users.ps1/blob/main/Generate-Names-Create-Users.ps1) ]
+   - Paste the script and edit to suit creation amount
+   - Run Script to generate users into the domain.
+     
+</p>
 
+<p> 
+<img width="1252" height="864" alt="image" src="https://github.com/user-attachments/assets/a28acba1-2aa2-4df9-807f-732bd5926578" />
 
+</p>
 
-As you can see the Powershell script created a user with the username "bid.tuk". We were able to login to Client-1 with his credentials as a normal user.
+<p> 
+  
+- When finished, open ADUC and observe the accounts in the appropriate OU  "_EMPLOYEES"
+</p>
 
-<img width="824" height="429" alt="Screenshot 2025-09-06 105653" src="https://github.com/user-attachments/assets/e413e324-61f5-4834-bdb1-a2b102a918f0" />
+<p> 
+<img width="741" height="520" alt="image" src="https://github.com/user-attachments/assets/7153e3d8-957d-442c-9158-60d13a0e0936" />
 
-
-
-
-
-
-
+</p>
 
 
 <p>
 
+<h2> </h2>
 
+<h2> Login as any user </h2> 
+
+<p> 
+  
+  - You can now login as any of the users that was created by the script to further verify that the script has worked.
+  - Take note of the default password in the script (Password1) for all users.
+</p>
+
+<p> 
+  
+<img width="450" height="293" alt="image" src="https://github.com/user-attachments/assets/d48d2836-dc1c-43ab-bcc6-9f5c3b8543c5" />
+<img width="735" height="368" alt="image" src="https://github.com/user-attachments/assets/17bb3364-324b-47ce-8950-1583e81ad272" />
+
+</p>
+
+<p> 
+  
+As shown Powershell script created a user with the username "vurok.perasaw". We were able to login to Client-1 with his credentials as a normal user.
+
+</p>
+
+<p> 
+
+<img width="491" height="185" alt="image" src="https://github.com/user-attachments/assets/9bff271d-1809-4218-aaf6-15079a572752" />
+
+</p>
+
+
+
+
+<H2> Conclusion </H2>
+
+<p> 
+  
+In this lab, we deployed and configured a working Active Directory environment. We set up a Domain Controller and a client machine in Azure, ensured they could communicate, and installed Active Directory Domain Services. After creating a new domain, we added organizational units and user accounts, including an admin account, and joined the client to the domain.
+
+We also configured Remote Desktop access for domain users and used a PowerShell script to generate additional users. Finally, we tested logging into the client with one of the new accounts. This lab gave us hands-on experience with essential Active Directory tasks and configurations.
+
+</p>
 
 
 
