@@ -136,18 +136,24 @@ In the Event you need to restore AD, Ensure you create a password for such a tim
 
 <p>
   
-   - Turn Jane Doe into an admin by right clicking her name > properties
-   - member of and adding her to the "Domain Admins" Security Group
-
+   - Turn Jane Doe into an admin by right clicking her name > properties > Member Of > Add > type Domain Admins > Check Name > OK
+   
 </p>
   
 <p> 
+  
 <img width="834" height="499" alt="image" src="https://github.com/user-attachments/assets/52d9411e-ca86-48cc-b967-cdcf9a1d45ae" />
+<img width="452" height="249" alt="Screenshot 2025-10-06 221735" src="https://github.com/user-attachments/assets/b86705a4-562f-4a6f-a5a0-05698ca93fd4" />
 <img width="408" height="219" alt="image" src="https://github.com/user-attachments/assets/0ad7d0b0-8c5d-48b3-ab0f-64f2aced76a4" />
 
-
-
 </p>
+
+<P> 
+  
+  - Now Jane Doe is a Domain Admin that can create users, manage/ create Group Policies etc
+  - We will user Jane Doe Admin account going forward.
+  
+</P>
 
 <p>
 
