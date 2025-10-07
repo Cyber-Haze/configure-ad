@@ -22,8 +22,8 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 <p> 
 
-  - Install Active Directory
-  - Create Domain Admin User
+  - Install Active Directory & Promote DC-1 to Domain Controller
+  - Create Domain Admin User & Normal User Accounts
   - 
   
 
@@ -54,71 +54,100 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 <p>
 
-## Step 2: Promote DC-1 to Domain Controller
-
+<h2></h2>
 
 2. Click on the flag at the top right of the screen with the warning sign  
    - Select "Promote this server to Domain Controller"
-   - Setup a new forrest as "mydomain.com"
-   - Restart and then log back into DC-1 as user: mydomain.com\reggie-admin  
-
+   - Add a new forest: "mydomain.com"
+   
 
 <p> 
 
 <img width="997" height="400" alt="image" src="https://github.com/user-attachments/assets/28053711-483e-468b-9b78-e80138bc5302" />
 <img width="758" height="331" alt="image" src="https://github.com/user-attachments/assets/31e2ade8-4a4f-4a1a-973b-76b489a4f79e" />
 
+</p>
+
+In the Event you need to restore AD, Ensure you create a password for such a time 
+
+</p>
+<P> 
+<img width="747" height="389" alt="image" src="https://github.com/user-attachments/assets/ecb59ed5-3509-443a-ba3a-2aad1ffa21e1" />
+
+</P>
+
+<p> 
+
+- After installation you AD-VM will restart.
+- Because of the New Domain Controller setup, the context of login has changed and must be specified.
+- To log in you now login as mydomain.com\labuser
+
+
+</p>
+<p> 
+<img width="400" height="246" alt="image" src="https://github.com/user-attachments/assets/c4e2ed53-a21c-4c82-9720-6237154821fb" />
+
+</p>
+
+<H2> Create Domain Admin User & Normal User Accounts </H2>
+
+**Create Organizational Units (OU) named _EMPLOYEES, _CLIENTS, and _ADMINS **
+
+ <p>  
+
+   - Open AD Users and Computers from Start Menu
+   - Right click Mydomain.com > Select New > Organizational Unit
+   - Create OU's : _EMPLOYEES, _CLIENTS, and _ADMINS
+ 
+ </p>
+<br/> 
+<P> 
+
+<img width="751" height="526" alt="image" src="https://github.com/user-attachments/assets/2ef32c6b-2f91-4a0e-a6a6-2a881395554e" />
+<img width="672" height="303" alt="image" src="https://github.com/user-attachments/assets/737a079d-5889-49ba-912d-27afbf598b17" />
+
+</P>
+
+<h2> </h2> 
+
+**Create a Domain Admin user within the domain**
+
+<p> 
+  
+   - Right click on the OU  _ADMINS and create a new user named Jane Doe.
+   - Username jane_admin  
+  
+  </p>
+  
+<p> 
+
+<img width="747" height="398" alt="image" src="https://github.com/user-attachments/assets/3a585330-ecba-43a3-aa8a-d48fb93e3320" />
+<img width="435" height="371" alt="image" src="https://github.com/user-attachments/assets/45a266c2-5a70-414c-ae94-1f04993dfa20" />
+<img width="425" height="363" alt="image" src="https://github.com/user-attachments/assets/88b1057b-973d-4f4d-b9ad-fce4f13661e6" />
 
 
 </p>
 
+<h2> </h2> 
 
-- Run Active Directory Users & Computers shown below.
-
-
-
-<img width="822" height="494" alt="Screenshot 2025-09-06 103819" src="https://github.com/user-attachments/assets/dbf5c75f-b67e-4df0-8c55-8a2472d6abc3"/>
 <p>
 
+**Add jane_admin to the "Domain Admins" Security Group** 
 
-
-
-
-
-
-## Step 3: Create an Organizational Unit(OU) named _EMPLOYEES and _ADMINS
-
-   - Right click on mydomain.com and select New and click on Organizational Unit
-<img width="827" height="494" alt="Screenshot 2025-09-06 103839" src="https://github.com/user-attachments/assets/06054437-fc5b-4bcc-aa85-9310cd0ec976"/>
-
-
-- Create OU_EMPLOYEES and _ADMINS
-
-<img width="828" height="494" alt="Screenshot 2025-09-06 103851" src="https://github.com/user-attachments/assets/bb94dd8e-eb7e-4700-afc7-bd608abc2407"/>
 <p>
-
-
-
-
-## Step 4: Create a Domain Admin user within the domain
-
-
-   - Right click on the OU  _ADMINS and create a new user named Jane Doe.
-   - With the username jane_admin  
-
-<img width="827" height="497" alt="Screenshot 2025-09-06 103920" src="https://github.com/user-attachments/assets/52be3374-5a35-4afd-823c-65ad6d7f6e34" />
-<p>
-
-
-
-
-## Step 5: Add jane_admin to the "Domain Admins" Security Group 
-
-
+  
    - Turn Jane Doe into an admin by right clicking her name > properties
    - member of and adding her to the "Domain Admins" Security Group
 
-<img width="829" height="495" alt="Screenshot 2025-09-06 104037" src="https://github.com/user-attachments/assets/e911f82c-4922-49ea-a400-afaf42c1e959" />
+</p>
+  
+<p> 
+<img width="834" height="499" alt="image" src="https://github.com/user-attachments/assets/52d9411e-ca86-48cc-b967-cdcf9a1d45ae" />
+<img width="408" height="219" alt="image" src="https://github.com/user-attachments/assets/0ad7d0b0-8c5d-48b3-ab0f-64f2aced76a4" />
+
+
+
+</p>
 
 <p>
 
